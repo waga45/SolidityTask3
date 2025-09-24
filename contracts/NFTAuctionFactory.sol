@@ -101,6 +101,15 @@ contract NFTAuctionFactory is Initializable,UUPSUpgradeable,IAuctionFactory{
             revert(string(returnData));
         }
     }
+
+    function getNftAuctionCount() external view returns(uint256) {
+        return allAuctions.length;
+    }
+
+    function getNftAuctionAt(uint256 index) external view returns(address)  {
+        require(index < allAuctions.length, "Index out of bounds");
+        return allAuctions[index];
+    }
     //升级权限
     function _authorizeUpgrade(address newImplementation) internal override {
         if (msg.sender != owner) revert OnlyOwner();

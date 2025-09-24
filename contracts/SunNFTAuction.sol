@@ -105,7 +105,13 @@ contract SunNFTAuction is Initializable,UUPSUpgradeable,ISunNFTAuction{
                 require(tokenUsdPrice>=miniPriceUsdPrice, "tokenUsdPrice<miniPriceUsdPrice");
             }
             (int beforeTokenUsdPriceFee,uint8 beforeDecimals) = getPricePair(auction.tokenAddres);
-            uint256 beforeHighestPirceUsd=(auction.highestBidPrice*uint256(beforeTokenUsdPriceFee))/(10** beforeDecimals);
+            uint256 beforeHighestPirceUsd;
+            if(auction.tokenAddres==address(0)){
+                uint256 ethAmount = auction.highestBidPrice / 10**18;
+                beforeHighestPirceUsd=(ethAmount*uint256(beforeTokenUsdPriceFee))/(10** beforeDecimals);
+            }else{
+                beforeHighestPirceUsd=(auction.highestBidPrice*uint256(beforeTokenUsdPriceFee))/(10** beforeDecimals);
+            }
             require(tokenUsdPrice>beforeHighestPirceUsd, "tokenUsdPrice<=beforeHighestPirceUsd");
             //退回
             if(auction.tokenAddres==address(0)){
@@ -124,8 +130,8 @@ contract SunNFTAuction is Initializable,UUPSUpgradeable,ISunNFTAuction{
             //使用ETH参与竞拍,判断一下amount
             require(amount==msg.value,"amount!=value");
             (int256 ethFee,uint8 d) = getPricePair(address(0));
-            uint256 miniPriceUsdPrice =(auction.startPrice*uint256(ethFee))/(10** d);
-            uint256 auctionUsdAmount=(msg.value*uint256(ethFee))/(10** d);
+            uint256 miniPriceUsdPrice =((auction.startPrice/10**18)*uint256(ethFee))/(10** d);
+            uint256 auctionUsdAmount=((msg.value/10**18)*uint256(ethFee))/(10** d);
             console.log("startPrice:",auction.startPrice);
             console.log("auctionUsdAmount:",auctionUsdAmount);
             console.log("miniPriceUsdPrice:",miniPriceUsdPrice);

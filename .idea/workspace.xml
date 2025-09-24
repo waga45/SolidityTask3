@@ -2,21 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a57f21dc-f74e-4e6d-a5c7-1c6286de6fe3" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/contracts/IAuctionFactory.sol" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/contracts/ISunNFTAuction.sol" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/contracts/NFTAuctionFactory.sol" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/contracts/SunNFTAuction.sol" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/contracts/SunNFTAuctionV2.sol" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/SunNFT.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/SunNFT_Upgrade.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ignition/modules/01_deploy_SunNFTAuction_V1.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ignition/modules/02_deploy_SunNFTAuction_V2.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/contracts/Lock.sol" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/contracts/SunNFT.sol" beforeDir="false" afterPath="$PROJECT_DIR$/contracts/SunNFT.sol" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/contracts/NFTAuctionFactory.sol" beforeDir="false" afterPath="$PROJECT_DIR$/contracts/NFTAuctionFactory.sol" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/contracts/SunNFTAuction.sol" beforeDir="false" afterPath="$PROJECT_DIR$/contracts/SunNFTAuction.sol" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hardhat.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/hardhat.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ignition/modules/Lock.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/Lock.js" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -136,7 +131,7 @@
       <option name="presentableId" value="Default" />
       <updated>1758339098770</updated>
       <workItem from="1758339099883" duration="4144000" />
-      <workItem from="1758381293635" duration="53470000" />
+      <workItem from="1758381293635" duration="69025000" />
     </task>
     <servers />
   </component>
@@ -169,9 +164,6 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="VcsContentAnnotationSettings">
-    <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/tsconfig.json">

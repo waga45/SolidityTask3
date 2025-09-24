@@ -18,7 +18,7 @@ module.exports = {
       bytecodeHash: "none",
     }
   },
-  network:{
+  networks:{
     ganacheDev: {
       chainId: 1337,
       url: `${process.env.DEV_GANACHE_URL}:${process.env.DEV_GANACHE_PORT}`,
