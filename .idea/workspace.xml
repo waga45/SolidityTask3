@@ -2,16 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a57f21dc-f74e-4e6d-a5c7-1c6286de6fe3" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/ignition/modules/01_deploy_SunNFTAuction_V1.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ignition/modules/02_deploy_SunNFTAuction_V2.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ignition/modules/01_deploy_updatebug_v1.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/contracts/NFTAuctionFactory.sol" beforeDir="false" afterPath="$PROJECT_DIR$/contracts/NFTAuctionFactory.sol" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/contracts/SunNFTAuction.sol" beforeDir="false" afterPath="$PROJECT_DIR$/contracts/SunNFTAuction.sol" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hardhat.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/hardhat.config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ignition/modules/Lock.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -131,7 +125,7 @@
       <option name="presentableId" value="Default" />
       <updated>1758339098770</updated>
       <workItem from="1758339099883" duration="4144000" />
-      <workItem from="1758381293635" duration="69025000" />
+      <workItem from="1758381293635" duration="73129000" />
     </task>
     <servers />
   </component>

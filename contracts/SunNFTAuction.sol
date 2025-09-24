@@ -29,6 +29,7 @@ contract SunNFTAuction is Initializable,UUPSUpgradeable,ISunNFTAuction{
         address contractAddr; //合约地址
         address tokenAddres;//其他ERC20标准代币
         uint256 usdPrice;//出价当时USD价值
+        address pricePair;
     }
     //拍卖ID->获得信息映射
     Action private auction;
@@ -78,14 +79,15 @@ contract SunNFTAuction is Initializable,UUPSUpgradeable,ISunNFTAuction{
         tokenId: _tokenId,
         contractAddr:_nftAddress,
         tokenAddres:address(0),
-        usdPrice:0
+        usdPrice:0,
+        pricePair:address(0)
         });
     }
 
     //2.参与竞拍（支持ETH/ERC20代币  这里需要考虑汇率浮动以及结算问题 以最高价本币结算，或者以统一度量USD结算处理方式都不一样）
     //因为msg.value 无法处理除ETH以外的token，所以入参处理下
     //这里暂时只做以最高价的本币结算，要求_erc20TokenAddress必须传，客户端提供ETH  USDC选项，这里统一用USD作为度量
-    function joinAuction(uint256 amount,address _erc20TokenAddress) public payable existToken {
+    function joinAuction(uint256 amount,address _pricePair,address _erc20TokenAddress) public payable existToken {
         require(msg.sender!=address(0));
         require(block.timestamp>=auction.startTime && block.timestamp<=auction.startTime+auction.duration,"error:the auction time corrent");
         require(auction.ended==false,"auction.ended=true");
@@ -95,16 +97,16 @@ contract SunNFTAuction is Initializable,UUPSUpgradeable,ISunNFTAuction{
         if(_erc20TokenAddress!=address(0)){
             //使用ERC20代币
             require(amount>0, "join amount<=0");
-            (int tokenUsdPriceFee,uint256 decimals) = getPricePair(_erc20TokenAddress);
+            (int tokenUsdPriceFee,uint256 decimals) = getPricePair(_pricePair);
             require(tokenUsdPriceFee > 0, "tokenUsdPriceFee <= 0");
             uint256 tokenUsdPrice = (amount * uint256(tokenUsdPriceFee))/(10** decimals);//当前出价
             if(auction.highestBidder==address(0)){
                 //第一次出价格
                 (int ethFee,uint8 d) = getPricePair(address(0));
-                uint256 miniPriceUsdPrice =(auction.startPrice*uint256(ethFee))/(10** d);
+                uint256 miniPriceUsdPrice =((auction.startPrice/ 10**18)*uint256(ethFee))/(10** d);
                 require(tokenUsdPrice>=miniPriceUsdPrice, "tokenUsdPrice<miniPriceUsdPrice");
             }
-            (int beforeTokenUsdPriceFee,uint8 beforeDecimals) = getPricePair(auction.tokenAddres);
+            (int beforeTokenUsdPriceFee,uint8 beforeDecimals) = getPricePair(auction.pricePair);
             uint256 beforeHighestPirceUsd;
             if(auction.tokenAddres==address(0)){
                 uint256 ethAmount = auction.highestBidPrice / 10**18;
@@ -124,7 +126,7 @@ contract SunNFTAuction is Initializable,UUPSUpgradeable,ISunNFTAuction{
             auction.highestBidPrice=amount;
             auction.usdPrice=tokenUsdPrice;
             auction.tokenAddres=_erc20TokenAddress;
-
+            auction.pricePair=_pricePair;
             emit EventJoinAuction(auction.tokenId,beforeHighestBidder,beforePrice,msg.sender,amount,block.timestamp);
         }else {
             //使用ETH参与竞拍,判断一下amount
@@ -141,8 +143,9 @@ contract SunNFTAuction is Initializable,UUPSUpgradeable,ISunNFTAuction{
                 auction.highestBidder=msg.sender;
                 auction.highestBidPrice=msg.value;
                 auction.usdPrice=auctionUsdAmount;
+                auction.pricePair=_pricePair;
             }else {
-                (int256 beoforeTokenFee,uint8 decimals)=getPricePair(auction.tokenAddres);
+                (int256 beoforeTokenFee,uint8 decimals)=getPricePair(auction.pricePair);
                 require(beoforeTokenFee>0,"beoforeTokenFee<=0");
                 uint256 beforeTokenUsdPrice=(auction.highestBidPrice*uint256(beoforeTokenFee))/(10** decimals);
                 require(auctionUsdAmount>beforeTokenUsdPrice, "auctionUsdAmount<beforeTokenUsdPrice");
@@ -156,6 +159,7 @@ contract SunNFTAuction is Initializable,UUPSUpgradeable,ISunNFTAuction{
                 auction.highestBidder=msg.sender;
                 auction.highestBidPrice=msg.value;
                 auction.usdPrice=auctionUsdAmount;
+                auction.pricePair=_pricePair;
             }
             //nofity
             emit EventJoinAuction(auction.tokenId,beforeHighestBidder,beforePrice,msg.sender,msg.value,block.timestamp);
@@ -168,7 +172,7 @@ contract SunNFTAuction is Initializable,UUPSUpgradeable,ISunNFTAuction{
         require(msg.sender!=address(0),"not allowed process");
         require(msg.sender==auction.seller,"not permission");
         require(auction.ended==false,"auction.ended=true");
-        require(block.timestamp>auction.startTime+auction.duration,"havent ending");
+//        require(block.timestamp>auction.startTime+auction.duration,"havent ending");
         //如果没人参与，直接结束，把NFT在退回给参与者
         if(auction.highestBidder==address(0)){
             auction.ended=true;
